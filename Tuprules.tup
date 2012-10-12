@@ -1,0 +1,34 @@
+## GENERAL ##
+PROJECT = project-name
+SRC = $(TUP_CWD)/src
+TEST = $(TUP_CWD)/test
+LIB = $(TUP_CWD)/lib
+
+## COMPILE ##
+
+CXX = clang++
+
+CFLAGS += -std=c++0x
+CFLAGS += -Wall
+CFLAGS += -I.
+CFLAGS += -I$(TUP_CWD)/include
+
+ifeq (@(MODE),DEBUG)
+CFLAGS += -g
+CFLAGS += -O0
+endif
+
+ifeq (@(MODE),RELEASE)
+CFLAGS += -DNDEBUG
+CFLAGS += -O3
+endif
+
+!compile = |> $(CXX) $(CFLAGS) -c %f -o %o |> %B.o
+
+## LINKING ##
+
+ifeq (@(MODE),RELEASE)
+LFLAGS += -O3
+endif
+
+!link = |> $(CXX) $(LFLAGS) -o %o %f $(LIBS) |>

@@ -1,0 +1,4 @@
+.tup
+build-*/
+*.sublime-workspace
+*.o

@@ -1,0 +1,12 @@
+include_rules
+
+MAIN = $(SRC)/main.o
+
+: $(MAIN) $(OBJECTS) |> !link |> $(PROJECT)
+
+TEST_OBJECTS += $(LIB)/libgtest_main.a
+TEST_OBJECTS += $(TEST)/*.o
+
+LIBS = -lpthread
+
+: $(TEST_OBJECTS) $(OBJECTS) |> !link |> $(PROJECT)_test
